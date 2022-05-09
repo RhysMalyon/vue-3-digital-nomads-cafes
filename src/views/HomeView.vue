@@ -15,10 +15,16 @@
                         <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title">
-                                    <router-link :to="`/about/${place.placeId}`">
+                                    <router-link
+                                        :to="`/about/${place.placeId}`"
+                                    >
                                         {{ place.name }}
                                     </router-link>
                                 </h5>
+                                <div class="d-flex">
+                                    <p v-if="place.hasPower"><BIconPlug /></p>
+                                    <p v-if="place.hasWifi"><BIconWifi /></p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -30,6 +36,7 @@
 
 <script>
 import { reactive, toRefs, computed } from "vue";
+import { BIconPlug, BIconWifi } from "bootstrap-icons-vue";
 
 export default {
     name: "HomeView",
@@ -51,9 +58,14 @@ export default {
             }
 
             return state.places.filter((place) => {
-                return place.name.toLowerCase().includes(state.placeName);
+                return place.name.toLowerCase().includes(state.placeName.toLowerCase());
             });
         }
+    },
+
+    components: {
+        BIconPlug,
+        BIconWifi,
     },
 };
 </script>

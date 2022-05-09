@@ -1,8 +1,14 @@
 <template>
     <div class="container mt-3">
         <div class="about" v-if="place">
-            <h1><a :href="place.website">{{ place.name }}</a></h1>
+            <h1>
+                <a :href="place.website">{{ place.name }}</a>
+            </h1>
             <p>{{ place.address }}</p>
+            <div class="d-flex">
+                <p v-if="place.hasPower"><BIconPlug /></p>
+                <p v-if="place.hasWifi"><BIconWifi /></p>
+            </div>
         </div>
     </div>
 </template>
@@ -10,6 +16,7 @@
 <script>
 import { reactive, toRefs } from "vue";
 import { useRoute } from "vue-router";
+import { BIconPlug, BIconWifi } from "bootstrap-icons-vue";
 
 export default {
     setup() {
@@ -25,8 +32,13 @@ export default {
             .then((data) => {
                 place.place = data;
             });
-		console.log(place)
+        console.log(place);
         return { ...toRefs(place) };
+    },
+
+    components: {
+        BIconPlug,
+        BIconWifi,
     },
 };
 </script>
