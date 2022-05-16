@@ -55,7 +55,7 @@
                     @closeclick="openMarker(null)"
                     :opened="openedMarkerID === place.placeId"
                 >
-                    <div>
+                    <div style="width: 200px;">
                         <h5>
                             <router-link :to="`/about/${place.placeId}`">
                                 {{ place.name }}
@@ -90,8 +90,12 @@
                                     </router-link>
                                 </h5>
                                 <div class="d-flex mt-3">
-                                    <p v-if="place.hasPower" class="m-0"><BIconPlug /></p>
-                                    <p v-if="place.hasWifi" class="m-0"><BIconWifi /></p>
+                                    <p v-if="place.hasPower" class="m-0">
+                                        <BIconPlug />
+                                    </p>
+                                    <p v-if="place.hasWifi" class="m-0">
+                                        <BIconWifi />
+                                    </p>
                                 </div>
                             </div>
                         </div>
