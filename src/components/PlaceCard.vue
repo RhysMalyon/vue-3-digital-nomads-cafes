@@ -1,6 +1,6 @@
 <template>
-    <div class="col">
-        <div class="card h-100">
+    <div class="col h-100">
+        <div class="card">
             <div class="card-body">
                 <h5 class="card-title">
                     <a :href="`about/${place.placeId}`">{{ place.name }}</a>
