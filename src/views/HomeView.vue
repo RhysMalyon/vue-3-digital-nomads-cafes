@@ -55,7 +55,7 @@
                     @closeclick="openMarker(null)"
                     :opened="openedMarkerID === place.placeId"
                 >
-                    <div style="width: 200px;">
+                    <div style="width: 200px">
                         <h5>
                             <router-link :to="`/about/${place.placeId}`">
                                 {{ place.name }}
@@ -106,18 +106,30 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import { reactive, toRefs, computed, ref } from "vue";
 import { BIconPlug, BIconWifi } from "bootstrap-icons-vue";
+import Place from "@/types/place";
 
 export default {
     setup() {
-        const state = reactive({
+        const state: {
+            places: Place[];
+            filteredPlaces: Place[];
+            placeName: string;
+            mapCenter: {
+                lat: number;
+                lng: number;
+            };
+            mapZoom: number;
+            openedMarkerID: string | null;
+        } = reactive({
             places: [],
             filteredPlaces: computed(() => updatePlaceList()),
             placeName: "",
             mapCenter: computed(() => findMapCenter()),
             mapZoom: 7,
+            openedMarkerID: null,
         });
 
         const myMap = ref(null);
@@ -126,7 +138,7 @@ export default {
             .then((res) => res.json())
             .then((data) => (state.places = data))
             .then(() =>
-                state.places.forEach((place) => {
+                state.places.forEach((place: Place) => {
                     place.location = {
                         lat: place.latitude,
                         lng: place.longitude,
@@ -136,14 +148,19 @@ export default {
         return {
             ...toRefs(state),
             myMap,
+            openMarker,
         };
+
+        function openMarker(id: null | string) {
+            state.openedMarkerID = id;
+        }
 
         function updatePlaceList() {
             if (!state.placeName) {
                 return state.places;
             }
 
-            return state.places.filter((place) => {
+            return state.places.filter((place: Place) => {
                 return place.name
                     .toLowerCase()
                     .includes(state.placeName.toLowerCase());
@@ -176,18 +193,6 @@ export default {
                 };
             }
         }
-    },
-
-    data() {
-        return {
-            openedMarkerID: null,
-        };
-    },
-
-    methods: {
-        openMarker(id) {
-            this.openedMarkerID = id;
-        },
     },
 
     components: {
