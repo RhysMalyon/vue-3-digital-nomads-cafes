@@ -9,38 +9,7 @@
         <GMapCluster
             :minimumClusterSize="20"
             :zoomOnClick="true"
-            :styles="[
-                {
-                    textColor: 'black',
-                    url: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/37c2a570c318122df57b83140f5f54665b9359e5/packages/markerclustererplus/images/m1.png',
-                    height: 52,
-                    width: 53,
-                },
-                {
-                    textColor: 'black',
-                    url: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/37c2a570c318122df57b83140f5f54665b9359e5/packages/markerclustererplus/images/m2.png',
-                    height: 55,
-                    width: 56,
-                },
-                {
-                    textColor: 'black',
-                    url: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/37c2a570c318122df57b83140f5f54665b9359e5/packages/markerclustererplus/images/m3.png',
-                    height: 65,
-                    width: 66,
-                },
-                {
-                    textColor: 'black',
-                    url: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/37c2a570c318122df57b83140f5f54665b9359e5/packages/markerclustererplus/images/m4.png',
-                    height: 77,
-                    width: 78,
-                },
-                {
-                    textColor: 'black',
-                    url: 'https://raw.githubusercontent.com/googlemaps/v3-utility-library/37c2a570c318122df57b83140f5f54665b9359e5/packages/markerclustererplus/images/m5.png',
-                    height: 89,
-                    width: 90,
-                },
-            ]"
+            :styles="clusterImages"
         >
             <GMapMarker
                 v-for="place in filteredPlaces"
@@ -79,27 +48,7 @@
             </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
                 <div v-for="place in filteredPlaces" :key="place.placeId">
-                    <div class="col h-100">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <h5 class="card-title">
-                                    <router-link
-                                        :to="`/about/${place.placeId}`"
-                                    >
-                                        {{ place.name }}
-                                    </router-link>
-                                </h5>
-                                <div class="d-flex mt-3">
-                                    <p v-if="place.hasPower" class="m-0">
-                                        <BIconPlug />
-                                    </p>
-                                    <p v-if="place.hasWifi" class="m-0">
-                                        <BIconWifi />
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <place-card :place="place" />
                 </div>
             </div>
         </div>
@@ -108,8 +57,9 @@
 
 <script lang="ts">
 import { reactive, toRefs, computed, ref } from "vue";
-import { BIconPlug, BIconWifi } from "bootstrap-icons-vue";
 import Place from "@/types/place";
+import clusterImages from "@/assets/clusterImages";
+import PlaceCard from "@/components/PlaceCard.vue";
 
 export default {
     setup() {
@@ -149,6 +99,7 @@ export default {
             ...toRefs(state),
             myMap,
             openMarker,
+            clusterImages,
         };
 
         function openMarker(id: null | string) {
@@ -196,8 +147,7 @@ export default {
     },
 
     components: {
-        BIconPlug,
-        BIconWifi,
+        PlaceCard
     },
 };
 </script>
