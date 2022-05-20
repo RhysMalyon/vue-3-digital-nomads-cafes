@@ -147,7 +147,7 @@ export default {
     },
 
     components: {
-        PlaceCard
+        PlaceCard,
     },
 };
 </script>

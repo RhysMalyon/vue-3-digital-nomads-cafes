@@ -98,7 +98,6 @@ export default {
                 );
                 state.place.businessHours = JSON.parse(data.businessHours);
             });
-        console.log(state);
         return { ...toRefs(state) };
     },
 
