@@ -1,4 +1,4 @@
-# vue-3-pokemon-picker
+# vue-3-digital-nomads-cafes
 
 ## Project setup
 ```
